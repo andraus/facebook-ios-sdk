@@ -570,6 +570,14 @@ static const NSInteger kMinimumCountToCollate = 6;
                 [self.controllerDelegate graphObjectTableDataSource:self
                                                  customizeTableCell:cell];
             }
+            
+            [cell setBackgroundView:nil];
+            [cell setUserInteractionEnabled:YES];
+            FBShouldDisableUserResult *fbShouldDisableUserResult = [self.controllerDelegate disableRow:self data:item];
+            if (fbShouldDisableUserResult) {
+                [cell disableCell:fbShouldDisableUserResult];
+            }
+
         } else {
             cell.picture = nil;
             cell.subtitle = nil;

@@ -19,6 +19,7 @@
 #import "FBSession.h"
 #import "FBCacheDescriptor.h"
 #import "FBViewController.h"
+#import "FBShouldDisableUserResult.h"
 
 @protocol FBFriendPickerDelegate;
 @class FBFriendPickerCacheDescriptor;
@@ -276,6 +277,20 @@ typedef enum {
  */
 - (BOOL)friendPickerViewController:(FBFriendPickerViewController *)friendPicker
                  shouldIncludeUser:(id <FBGraphUser>)user;
+
+
+/*!
+ @abstract
+ Asks the delegate whether to disable the row for this user
+ 
+ @discussion
+ Return a (FBShouldDisableUserResult *) with information whether to disable the user or not.
+ 
+ @param friendPicker        The friend picker view controller that is requesting this information.
+ @param user                An <FBGraphUser> object representing the friend.
+ */
+- (FBShouldDisableUserResult *)friendPickerViewController:(FBFriendPickerViewController *)friendPicker
+                 shouldDisableUser:(id <FBGraphUser>)user;
 
 /*!
  @abstract

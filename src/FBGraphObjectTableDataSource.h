@@ -16,6 +16,7 @@
 
 #import <UIKit/UIKit.h>
 #import "FBGraphObject.h"
+#import "FBShouldDisableUserResult.h"
 
 @protocol FBGraphObjectViewControllerDelegate;
 @protocol FBGraphObjectSelectionQueryDelegate;
@@ -85,7 +86,10 @@
 
 - (void)graphObjectTableDataSource:(FBGraphObjectTableDataSource*)dataSource
                 customizeTableCell:(FBGraphObjectTableCell*)cell;
-                
+
+- (FBShouldDisableUserResult *) disableRow:(FBGraphObjectTableDataSource *)dataSource
+                     data:(id<FBGraphObject>)graphUser;
+
 @end
 
 @protocol FBGraphObjectSelectionQueryDelegate <NSObject>

@@ -15,6 +15,7 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "FBShouldDisableUserResult.h"
 
 @interface FBGraphObjectTableCell : UITableViewCell
 
@@ -32,5 +33,7 @@
 
 - (void)startAnimatingActivityIndicator;
 - (void)stopAnimatingActivityIndicator;
+
+- (void)disableCell:(FBShouldDisableUserResult *)disableUserResult;
 
 @end

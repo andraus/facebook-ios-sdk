@@ -225,4 +225,23 @@ static const CGFloat subtitleHeight = subtitleFontHeight * 1.25;
     [self setNeedsLayout];
 }
 
+- (void)disableCell:(FBShouldDisableUserResult *)shouldDisableUserResult {
+    
+    if (shouldDisableUserResult.disable) {
+        const float ALPHA = 0.439216f; // (1 - alpha) * 255 = 143
+        self.userInteractionEnabled = NO;
+        
+        UIView* bgview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+        bgview.alpha = ALPHA;
+        bgview.backgroundColor = [UIColor blackColor];
+        [self setBackgroundView:bgview];
+        [self bringSubviewToFront:bgview];
+        [bgview release];
+    }
+    
+    if (shouldDisableUserResult.subtitle) {
+        [self setSubtitle:shouldDisableUserResult.subtitle];
+    }
+}
+
 @end

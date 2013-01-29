@@ -106,6 +106,8 @@
 		85F29E9415785D72001F0531 /* FBTestSession+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 85F29E9315785D72001F0531 /* FBTestSession+Internal.h */; };
 		85F29E9C1578782B001F0531 /* FBContentLink.m in Sources */ = {isa = PBXBuildFile; fileRef = E7BBCE3015753C8E00B6B8F6 /* FBContentLink.m */; };
 		85F99E3F15C3751100D807A5 /* FBViewController+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 85F99E3E15C3751000D807A5 /* FBViewController+Internal.h */; };
+		892CBC4616BAA98800CD7D16 /* FBShouldDisableUserResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 892CBC4416BAA98800CD7D16 /* FBShouldDisableUserResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		892CBC4716BAA98800CD7D16 /* FBShouldDisableUserResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 892CBC4516BAA98800CD7D16 /* FBShouldDisableUserResult.m */; };
 		AA747D9F0F9514B9006C5449 /* facebook_ios_sdk_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = AA747D9E0F9514B9006C5449 /* facebook_ios_sdk_Prefix.pch */; };
 		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
 		AEA93B0B11D5293B000A4545 /* FBRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = AEA93B0211D5293B000A4545 /* FBRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -246,6 +248,8 @@
 		85E4AC7B15B63CC500F17346 /* FBViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBViewController.m; sourceTree = "<group>"; };
 		85F29E9315785D72001F0531 /* FBTestSession+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FBTestSession+Internal.h"; sourceTree = "<group>"; };
 		85F99E3E15C3751000D807A5 /* FBViewController+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FBViewController+Internal.h"; sourceTree = "<group>"; };
+		892CBC4416BAA98800CD7D16 /* FBShouldDisableUserResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBShouldDisableUserResult.h; sourceTree = "<group>"; };
+		892CBC4516BAA98800CD7D16 /* FBShouldDisableUserResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBShouldDisableUserResult.m; sourceTree = "<group>"; };
 		AA747D9E0F9514B9006C5449 /* facebook_ios_sdk_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = facebook_ios_sdk_Prefix.pch; sourceTree = SOURCE_ROOT; };
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AEA93B0211D5293B000A4545 /* FBRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBRequest.h; sourceTree = "<group>"; };
@@ -469,6 +473,8 @@
 				85E4AC7A15B63CC500F17346 /* FBViewController.h */,
 				85F99E3E15C3751000D807A5 /* FBViewController+Internal.h */,
 				85E4AC7B15B63CC500F17346 /* FBViewController.m */,
+				892CBC4416BAA98800CD7D16 /* FBShouldDisableUserResult.h */,
+				892CBC4516BAA98800CD7D16 /* FBShouldDisableUserResult.m */,
 			);
 			name = FacebookSDK;
 			sourceTree = "<group>";
@@ -565,6 +571,7 @@
 				B966ADFC152D020E005FC07B /* FBGraphObjectTableCell.h in Headers */,
 				84AE5DA3152EA02500C4DE54 /* FBGraphObject.h in Headers */,
 				84E2DA28153492DE007F886C /* FBGraphPlace.h in Headers */,
+				892CBC4616BAA98800CD7D16 /* FBShouldDisableUserResult.h in Headers */,
 				84E2DA2C15353430007F886C /* FBGraphLocation.h in Headers */,
 				84E0C9F91535ED5A00778DA4 /* FBGraphUser.h in Headers */,
 				84E0CA04153618E500778DA4 /* FacebookSDK.h in Headers */,
@@ -788,6 +795,7 @@
 				85E4AC7815B63CB600F17346 /* FBUserSettingsViewController.m in Sources */,
 				85E4AC7E15B63CC500F17346 /* FBViewController.m in Sources */,
 				85A928911611187F008699F1 /* FBNativeDialogs.m in Sources */,
+				892CBC4716BAA98800CD7D16 /* FBShouldDisableUserResult.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

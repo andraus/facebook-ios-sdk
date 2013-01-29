@@ -412,6 +412,16 @@ int const FBRefreshCacheDelaySeconds = 2;
     }
 }
 
+- (FBShouldDisableUserResult *)disableRow:(FBGraphObjectTableDataSource *)dataSource
+                    data:(id<FBGraphUser>)graphUser {
+    
+    if ([self.delegate respondsToSelector:@selector(friendPickerViewController:shouldDisableUser:)]) {
+        return [(id)self.delegate friendPickerViewController:self shouldDisableUser:graphUser];
+    } else {
+        return nil;
+    }
+}
+
 - (NSString *)graphObjectTableDataSource:(FBGraphObjectTableDataSource *)dataSource
                              titleOfItem:(id<FBGraphUser>)graphUser {
     // Title is either "First Middle" or "Last" depending on display order.
