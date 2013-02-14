@@ -26,10 +26,9 @@
 @property (retain, nonatomic) NSString *previousImageQueryParamString;
 
 @property (retain, nonatomic) FBURLConnection *connection;
-@property (retain, nonatomic) UIImageView *imageView;
 
 - (void)initialize;
-- (void)refreshImage:(BOOL)forceRefresh;
+- (void)refreshImage:(BOOL)forceRefresh completionHandler:(void (^) (NSError *error))completionHandler;
 - (void)ensureImageViewContentMode;
 
 @end
@@ -63,7 +62,19 @@
 }
 
 - (id)initWithProfileID:(NSString *)profileID 
-        pictureCropping:(FBProfilePictureCropping)pictureCropping {
+        pictureCropping:(FBProfilePictureCropping)pictureCropping
+      completionHandler:(void (^) (NSError *))completionHandler {
+    self = [self init];
+    if (self) {
+        self.pictureCropping = pictureCropping;
+        [self setProfileID:profileID withCompletionHandler:completionHandler];
+    }
+    
+    return self;
+}
+
+-(id)initWithProfileID:(NSString *)profileID
+       pictureCropping:(FBProfilePictureCropping)pictureCropping {
     self = [self init];
     if (self) {
         self.pictureCropping = pictureCropping;
@@ -138,7 +149,8 @@
     [self addSubview:self.imageView];
 }
 
-- (void)refreshImage:(BOOL)forceRefresh  {
+- (void)refreshImage:(BOOL)forceRefresh completionHandler:(void (^) (NSError *))completionHandler {
+    
     NSString *newImageQueryParamString = self.imageQueryParamString;
     
     // If not forcing refresh, check to see if the previous size we used would be the same
@@ -163,6 +175,9 @@
                 if (!error) {
                     self.imageView.image = [UIImage imageWithData:data];
                     [self ensureImageViewContentMode];
+                }
+                if (completionHandler) {
+                    completionHandler(error);
                 }
             };
                 
@@ -211,25 +226,29 @@
     self.imageView.contentMode = contentMode;
 }
 
-- (void)setProfileID:(NSString*)profileID {
+- (void)setProfileID:(NSString*)profileID withCompletionHandler:(void (^) (NSError *error))completionHandler {
     if (!_profileID || ![_profileID isEqualToString:profileID]) {
         [_profileID release];
         _profileID = [profileID copy];
-        [self refreshImage:YES];
+        [self refreshImage:YES completionHandler:completionHandler];
     }
+}
+
+-(void)setProfileID:(NSString *)profileID {
+    [self setProfileID:profileID withCompletionHandler:nil];
 }
 
 - (void)setPictureCropping:(FBProfilePictureCropping)pictureCropping  {
     if (_pictureCropping != pictureCropping) {
         _pictureCropping = pictureCropping;
-        [self refreshImage:YES];
+        [self refreshImage:YES completionHandler:nil];
     }
 }
 
 // Lets us catch resizes of the control, or any outer layout, allowing us to potentially
 // choose a different image.
 - (void)layoutSubviews {
-    [self refreshImage:NO];
+    [self refreshImage:NO completionHandler:nil];
     [super layoutSubviews];   
 }
 

@@ -61,6 +61,12 @@ typedef enum {
 
 /*!
  @abstract
+ Underlying UIImageView for the picture.
+ */
+@property (retain, nonatomic) UIImageView *imageView;
+
+/*!
+ @abstract
  Initializes and returns a profile view object.
  */
 - (id)init;
@@ -76,5 +82,25 @@ typedef enum {
 - (id)initWithProfileID:(NSString*)profileID 
      pictureCropping:(FBProfilePictureCropping)pictureCropping;
 
+/*!
+ @abstract
+ Initializes and returns a profile view object for the given Facebook ID and cropping with a callback.
+ 
+ @param profileID         The Facebook ID of the user, place or object for which a picture should be fetched and displayed.
+ @param pictureCropping   The cropping to use for the profile picture.
+ @param completionHandler The callback to be fired upon completion after the picture download.
+ */
+- (id)initWithProfileID:(NSString *)profileID
+        pictureCropping:(FBProfilePictureCropping)pictureCropping
+      completionHandler:(void (^) (NSError *))completionHandler;
+
+/*!
+ @abstract
+ Setter for the Facebook ID with a callback.
+ 
+ @param profileID             The Facebook ID of the user, place or object for which a picture should be fetched and displayed.
+ @param withCompletionHandler A callback block to be fired upon completion, after the picture download.
+ */
+-(void)setProfileID:(NSString *)profileID withCompletionHandler:(void (^) (NSError *error))completionHandler;
 
 @end
