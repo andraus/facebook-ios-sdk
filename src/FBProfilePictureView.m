@@ -245,12 +245,4 @@
     }
 }
 
-// Lets us catch resizes of the control, or any outer layout, allowing us to potentially
-// choose a different image.
-- (void)layoutSubviews {
-    [self refreshImage:NO completionHandler:nil];
-    [super layoutSubviews];   
-}
-
-
 @end
