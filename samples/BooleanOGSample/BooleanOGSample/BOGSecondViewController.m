@@ -20,6 +20,9 @@
 
 @interface BOGSecondViewController () <FBFriendPickerDelegate>
 
+@property (readwrite, nonatomic, copy) NSString *fbidSelection;
+@property (readwrite, nonatomic, retain) FBFrictionlessRecipientCache *friendCache;
+
 - (void)updateActivityForID:(NSString *)fbid;
 
 @end
@@ -27,6 +30,7 @@
 @implementation BOGSecondViewController
 
 @synthesize activityTextView = _activityTextView;
+@synthesize friendCache = _friendCache;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -47,7 +51,24 @@
     
     if (FBSession.activeSession.isOpen) {
         [self loadData];
+        
+        // we use frictionless requests, so let's get a cache and request the
+        // current list of frictionless friends before enabling the invite button
+        if (!self.friendCache) {
+            self.friendCache = [[FBFrictionlessRecipientCache alloc] init];
+            [self.friendCache prefetchAndCacheForSession:nil
+                                       completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                                           
+                                           self.inviteButton.enabled = YES;
+                                       }];
+        } else  {
+            // if we already have a primed cache, let's just run with it
+            self.inviteButton.enabled = YES;
+        }
     } else {
+        self.inviteButton.enabled = NO;
+        self.friendCache = nil;
+        
         // display the message that we have
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Social Features Disabled"
                                                         message:@"There is no open session with Facebook. Use the Facebook Settings "
@@ -62,6 +83,7 @@
 - (void)viewDidUnload {
     self.activityTextView = nil;
 
+    [self setInviteButton:nil];
     [super viewDidUnload];
 }
 
@@ -84,9 +106,11 @@
 // application.
 
 - (void)friendPickerViewControllerSelectionDidChange:(FBFriendPickerViewController *)friendPicker {
+    self.activityTextView.text = @"";
     if (friendPicker.selection.count) {
-        self.activityTextView.text = @"";
         [self updateActivityForID:[[friendPicker.selection objectAtIndex:0] id]];
+    } else {
+        self.fbidSelection = nil;
     }
 }
 
@@ -101,6 +125,9 @@
 // This is the workhorse method of this view. It updates the textView with the activity of a given user. It 
 // accomplishes this by fetching the "or" and "and" actions for the selected user.
 - (void)updateActivityForID:(NSString *)fbid {
+    
+    // keep track of the selction
+    self.fbidSelection = fbid;
     
     // create a request for the "or" activity
     FBRequest *orActivity = [FBRequest requestForGraphPath:[NSString stringWithFormat:@"%@/fb_sample_boolean_og:or", fbid]];
@@ -176,6 +203,17 @@
     
     // start the actual request
     [connection start];    
+}
+
+- (IBAction)clickInviteFriends:(id)sender {
+    // if there is a selected user, seed the dialog with that user
+    NSDictionary *parameters = self.fbidSelection ? @{@"to":self.fbidSelection} : nil;
+    [FBWebDialogs presentRequestsDialogModallyWithSession:nil
+                                                  message:@"Please come rock the logic with me!"
+                                                    title:@"Invite a Friend"
+                                               parameters:parameters
+                                                  handler:nil
+                                              friendCache:self.friendCache];
 }
 
 @end
